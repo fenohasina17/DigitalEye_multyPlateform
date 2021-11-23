@@ -30,70 +30,73 @@ import {
 
 const {brand, darkLight} = Colors;
 
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+
 const Login = () => {
 
         const [hidePassword, setHidePassword] = useState(true);
 
     return (
-        <StyledContainer>
-            <StatusBar style="dark" />
-            <InnerContainer>
-                <PageLogo resizeMode="cover" source={require('./../assets/img/logo.png')} />
-                <SubTitle>Account Login</SubTitle>
+        <KeyboardAvoidingWrapper>
+            <StyledContainer>
+                <StatusBar style="dark" />
+                <InnerContainer>
+                    <PageLogo resizeMode="cover" source={require('./../assets/img/logo.png')} />
+                    <SubTitle>Account Login</SubTitle>
 
-                <Formik
-                    initialValues={{ email: '', password: ''}}
-                    onSubmit={(values) => {
-                        console.log(values);
-                    }}
-                >
-                    {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
-                        <MyTextInput 
-                            label="Email Address"
-                            icon="mail"
-                            placeholder="feno@gmail.com"
-                            placeholderTextColor="darkLight"
-                            onChangeText={handleChange('email')}
-                            onBlur={handleBlur('email')}
-                            keyboardType="email-address"
+                    <Formik
+                        initialValues={{ email: '', password: ''}}
+                        onSubmit={(values) => {
+                            console.log(values);
+                        }}
+                    >
+                        {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                            <MyTextInput 
+                                label="Email Address"
+                                icon="mail"
+                                placeholder="feno@gmail.com"
+                                placeholderTextColor="darkLight"
+                                onChangeText={handleChange('email')}
+                                onBlur={handleBlur('email')}
+                                keyboardType="email-address"
 
-                        />
+                            />
+                            <MyTextInput 
+                                label="Password"
+                                icon="lock"
+                                placeholder="* * * * * * * *"
+                                placeholderTextColor="darkLight"
+                                onChangeText={handleChange('password')}
+                                onBlur={handleBlur('password')}
+                                secureTextEntry={hidePassword}
+                                isPassword={true}
+                                hidePassword={hidePassword}
+                                setHidePassword={setHidePassword}
 
-                        <MyTextInput 
-                            label="Password"
-                            icon="lock"
-                            placeholder="* * * * * * * *"
-                            placeholderTextColor="darkLight"
-                            onChangeText={handleChange('email')}
-                            onBlur={handleBlur('email')}
-                            secureTextEntry={hidePassword}
-                            isPassword={true}
-                            hidePassword={hidePassword}
-                            setHidePassword={setHidePassword}
+                            />
 
-                        />
+                            <MsgBox>...</MsgBox>
 
-                        <MsgBox>...</MsgBox>
+                            <StyledButton onPress={handleSubmit}>
+                                <ButtonText>
+                                    Login
+                                </ButtonText>
+                            </StyledButton>
 
-                        <StyledButton onPress={handleSubmit}>
-                            <ButtonText>
-                                Login
-                            </ButtonText>
-                        </StyledButton>
+                            <Line />
 
-                        <Line />
-
-                        <ExtraView>
-                            <ExtraText>Don't have an account already? </ExtraText>
-                            <TextLink>
-                                <TextLinkContent>Signup</TextLinkContent>
-                            </TextLink>
-                        </ExtraView>
-  
-                    </StyledFormArea>)}
-                </Formik>
-            </InnerContainer>
-        </StyledContainer>
+                            <ExtraView>
+                                <ExtraText>Don't have an account already? </ExtraText>
+                                <TextLink>
+                                    <TextLinkContent>Signup</TextLinkContent>
+                                </TextLink>
+                            </ExtraView>
+    
+                        </StyledFormArea>)}
+                    </Formik>
+                </InnerContainer>
+            </StyledContainer>
+        </KeyboardAvoidingWrapper>
     );
 }
 
