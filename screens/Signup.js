@@ -33,7 +33,7 @@ import {
 
 const {brand, darkLight} = Colors;
 
-const Signup = () => {
+const Signup = ({navigation}) => {
 
         const [hidePassword, setHidePassword] = useState(true);
 
@@ -81,9 +81,11 @@ const Signup = () => {
                     initialValues={{ firstName: '', lastName: '', email: '', phone: '', password: '', confirmPassword: '' }}
                     onSubmit={(values) => {
                         console.log(values);
+                        navigation.navigate("Welcome")
                     }}
                 >
-                    {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                    {({handleChange, handleBlur, handleSubmit, values}) => (
+                    <StyledFormArea>
                        
                         {/* <View >
                             <StyledButton onPress={ImagePickerExample} >Pick</StyledButton>
@@ -169,7 +171,7 @@ const Signup = () => {
   
                         <ExtraView>
                             <ExtraText>Already an account? </ExtraText>
-                            <TextLink>
+                            <TextLink onPress={ () => navigation.navigate("Login") }>
                                 <TextLinkContent>SignIn</TextLinkContent>
                             </TextLink>
                         </ExtraView>

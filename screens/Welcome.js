@@ -33,7 +33,7 @@ import {
 
 const {brand, darkLight} = Colors;
 
-const Welcome = () => {
+const Welcome = ({navigation}) => {
 
 
     return (
@@ -50,7 +50,7 @@ const Welcome = () => {
                         
                         <Line />
 
-                        <StyledButton onPress={() => {}}>
+                        <StyledButton onPress={() => {navigation.navigate("Login")}}>
                             <ButtonText>Logout</ButtonText>
                         </StyledButton>
 
