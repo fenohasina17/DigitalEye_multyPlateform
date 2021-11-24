@@ -1,10 +1,18 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 
 import { Formik } from 'formik';
 
 import { Octicons, Ionicons} from '@expo/vector-icons'
+
+
+import {Colors} from './../components/styles'
+
+const {primary, tertiary} = Colors; 
+
+
+import axios from 'axios';
 
 
 import {
@@ -19,7 +27,6 @@ import {
     RightIcon,
     StyledButton,
     ButtonText,
-    Colors, 
     MsgBox,
     Line,
     ExtraView,
@@ -34,29 +41,63 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 const Login = ({navigation}) => {
 
+
         const [hidePassword, setHidePassword] = useState(true);
+        const [message, setMessage] = useState(true);
+        const [messageType, setMessageType] = useState();
+
+        const handleLogin = (credentials, setSubmitting) => {
+           
+            const url = 'http://api.mobilevideosystems.net/api/login';
+
+            axios.post(url, credentials)
+                .then( (response) => {
+                    const result = response.data;
+                    const {data, error, message} = result;
+                    if(error == true) {
+                        console.log("blabla");
+                        handleMessage(message, error);
+                    }else{
+                        navigation.navigate('Welcome', {...data[0]});
+                    }
+                    // navigation.navigate('Welcome', {...data[0]});
+                    setSubmitting(false);
+                } )
+                .catch( error => {
+                console.log(error);
+                setSubmitting(false);
+                handleMessage("An error occurred check your network and try again");
+            })
+        }
+
+        const handleMessage =  (message, type = 'FAILED') => {
+            setMessage(message);
+            setMessageType(type);
+        }
 
     return (
         <KeyboardAvoidingWrapper>
             <StyledContainer>
-                <StatusBar style="dark" />
                 <InnerContainer>
                     <PageLogo resizeMode="cover" source={require('./../assets/img/logo.png')} />
                     <SubTitle>Account Login</SubTitle>
 
                     <Formik
                         initialValues={{ email: '', password: ''}}
-                        onSubmit={(values) => {
+                        onSubmit={(values, {setSubmitting}) => {
                             console.log(values);
-                            navigation.navigate("Welcome");
+                            if (values.email == '' || values.password == '') {
+                                 handleMessage("Please fill all the fields");
+                                setSubmitting(false);
+                            }else {
+                                handleLogin(values, setSubmitting);
+                            }
                         }}
                     >
-                        {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                        {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (<StyledFormArea>
                             <MyTextInput 
                                 label="Email Address"
                                 icon="mail"
-                                placeholder="feno@gmail.com"
-                                placeholderTextColor="darkLight"
                                 onChangeText={handleChange('email')}
                                 onBlur={handleBlur('email')}
                                 keyboardType="email-address"
@@ -64,9 +105,7 @@ const Login = ({navigation}) => {
                             />
                             <MyTextInput 
                                 label="Password"
-                                icon="lock"
-                                placeholder="* * * * * * * *"
-                                placeholderTextColor="darkLight"
+                                icon="lock"  
                                 onChangeText={handleChange('password')}
                                 onBlur={handleBlur('password')}
                                 secureTextEntry={hidePassword}
@@ -76,13 +115,20 @@ const Login = ({navigation}) => {
 
                             />
 
-                            <MsgBox>...</MsgBox>
+                            <MsgBox type={messageType}>{message}</MsgBox>
 
-                            <StyledButton onPress={handleSubmit}>
-                                <ButtonText>
-                                    Login
-                                </ButtonText>
-                            </StyledButton>
+                            {!isSubmitting && (
+                                <StyledButton onPress={handleSubmit}>
+                                    <ButtonText>
+                                        Login
+                                    </ButtonText>
+                                </StyledButton>
+                            )}
+                            {isSubmitting && (
+                                <StyledButton disabled={true}>
+                                    <ActivityIndicator size="large" color={primary} />
+                                </StyledButton> 
+                            )}
 
                             <Line />
 

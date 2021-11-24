@@ -4,7 +4,7 @@ import {View} from 'react-native';
 
 import { Formik } from 'formik';
 
-import { Octicons, Ionicons} from '@expo/vector-icons'
+import { Octicons, Ionicons, MaterialIcons} from '@expo/vector-icons'
 
 
 import {
@@ -28,7 +28,9 @@ import {
     ExtraText,
     TextLink,
     TextLinkContent, 
-    Avatar
+    Avatar, 
+    LogOutButton,
+    LogOutText
 } from './../components/styles'
 
 const {brand, darkLight} = Colors;
@@ -39,23 +41,22 @@ const Welcome = ({navigation}) => {
     return (
         <StyledContainer>
             <StatusBar style="dark" />
-            <InnerContainer>
-                <PageLogo resizeMode="cover" source={require('./../assets/img/logo.png')} />
-                <SubTitle>Welcome</SubTitle>
-
-                <WelcomeContainer>
+            <InnerContainer> 
                     <StyledFormArea>
 
                         <Avatar resizeMode="cover" source={require('./../assets/img/logo.png')} />
+                        <LogOutButton onPress={() => {navigation.navigate("Login")}}>
+                            <LogOutText>Logout</LogOutText>
+                            <MaterialIcons name="logout" size={24} color="black" />
+                        </LogOutButton>
                         
                         <Line />
 
-                        <StyledButton onPress={() => {navigation.navigate("Login")}}>
-                            <ButtonText>Logout</ButtonText>
+                        <StyledButton >
+                            <ButtonText>Add Usser</ButtonText>
                         </StyledButton>
 
                     </StyledFormArea>
-                </WelcomeContainer>
             </InnerContainer>
         </StyledContainer>
     );

@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import RootStack from './navigators/RootStack';
-
+import Login from './screens/Login';
 
 export default function App() {
   return (

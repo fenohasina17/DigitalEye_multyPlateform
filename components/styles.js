@@ -42,14 +42,14 @@ export const  PageLogo = styled.Image`
 `;
 
 export const Avatar = styled.Image`
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     margin: auto;
     border-radius: 50px;
     border-width: 2px;
     border-color: ${secondary};
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-left: 0px;
 `;
 
 export const WelcomeImage = styled.Image`
@@ -133,11 +133,13 @@ export const StyledButton = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
     color: ${primary};
     font-size: 16px;
+   
 `;
 
 export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
+    color: ${props => props.type == 'SUCCESS' ? green : red};
 `;
 
 export const Line = styled.View`
@@ -169,4 +171,25 @@ export const TextLink = styled.TouchableOpacity`
 export const TextLinkContent = styled.Text`
     color: ${brand};
     font-size: 15px;
+`;
+export const LogOutButton = styled.TouchableOpacity`
+    right: 0px;
+    top: 30px;
+    position: absolute;
+    padding: 15px;
+    background-color: ${brand};
+    justify-content: center;
+
+    border-radius: 5px;
+    margin-vertical: 5px;
+    height: 52px;
+    width: 115px;
+`;
+
+export const LogOutText = styled.Text`
+    color: ${primary};
+    font-size: 16px;
+    position: absolute;
+    padding: 15px;
+    left: 30px;
 `;
