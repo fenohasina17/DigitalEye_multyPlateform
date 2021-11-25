@@ -30,9 +30,31 @@ export const InnerContainer = styled.View`
     
 `;
 
+export const WelcomeContainer = styled.View`
+    padding: 25px;
+    padding-top: 10px;
+    justify-content: center;
+`;
+
 export const  PageLogo = styled.Image`
     width: 250px;
     height: 200px;
+`;
+
+export const Avatar = styled.Image`
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    border-radius: 50px;
+    border-width: 2px;
+    border-color: ${secondary};
+    margin-top: 20px;
+    margin-left: 0px;
+`;
+
+export const WelcomeImage = styled.Image`
+    height: 50%;
+    min-width: 100%;
 `;
 
 export const PageTitle = styled.Text`
@@ -41,6 +63,10 @@ export const PageTitle = styled.Text`
     font-weight: bold;
     color: ${brand};
     padding: 10px;
+
+    ${(props) => props.welcome && `
+        font-size: 35px;
+    `}
 `;
 
 export const SubTitle = styled.Text`
@@ -49,6 +75,12 @@ export const SubTitle = styled.Text`
     letter-spacing: 1px;
     font-weight:  bold;
     color: ${tertiary};
+
+    ${(props) => props.welcome && `
+    margin-bottom: 5px;
+    font-weight: normal;
+    
+    `}
 `;
 
 export const StyledFormArea = styled.View`
@@ -101,11 +133,13 @@ export const StyledButton = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
     color: ${primary};
     font-size: 16px;
+   
 `;
 
 export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
+    color: ${props => props.type == 'SUCCESS' ? green : red};
 `;
 
 export const Line = styled.View`
@@ -137,4 +171,25 @@ export const TextLink = styled.TouchableOpacity`
 export const TextLinkContent = styled.Text`
     color: ${brand};
     font-size: 15px;
+`;
+export const LogOutButton = styled.TouchableOpacity`
+    right: 0px;
+    top: 30px;
+    position: absolute;
+    padding: 15px;
+    background-color: ${brand};
+    justify-content: center;
+
+    border-radius: 5px;
+    margin-vertical: 5px;
+    height: 52px;
+    width: 115px;
+`;
+
+export const LogOutText = styled.Text`
+    color: ${primary};
+    font-size: 16px;
+    position: absolute;
+    padding: 15px;
+    left: 30px;
 `;
