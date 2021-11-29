@@ -51,6 +51,26 @@ export const Avatar = styled.Image`
     margin-top: 20px;
     margin-left: 0px;
 `;
+       
+export const AvatarUpload = styled.Image`
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    border-radius: 50px;
+    border-width: 2px;
+    border-color: ${secondary};
+   
+`;
+   
+export const ProfileAvatar = styled.Image`
+width: 120px;
+height: 120px;
+margin: auto;
+border-radius: 50px;
+border-width: 2px;
+border-color: ${secondary};
+
+`;
 
 export const WelcomeImage = styled.Image`
     height: 50%;
@@ -193,3 +213,20 @@ export const LogOutText = styled.Text`
     padding: 15px;
     left: 30px;
 `;
+
+export const BottomNav = styled.View`
+
+    padding: 15px;
+    background-color: ${brand};
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    height: 60px;
+    margin-bottom: 0px;
+
+`;
+
+export const StyledText = styled.Text`
+    font-size: 13px;
+    text-align: center;
+`

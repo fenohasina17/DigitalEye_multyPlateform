@@ -83,7 +83,7 @@ const Login = ({navigation}) => {
                     <SubTitle>Account Login</SubTitle>
 
                     <Formik
-                        initialValues={{ email: '', password: ''}}
+                        initialValues={{ email: 'pinrass9@gmail.com', password: '123456'}}
                         onSubmit={(values, {setSubmitting}) => {
                             console.log(values);
                             if (values.email == '' || values.password == '') {
@@ -161,5 +161,6 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
         )}
     </View>)
 }
+
 
 export default Login;
