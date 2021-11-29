@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {View, Text, StyleSheet, Image, Button , Platform} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Platform} from 'react-native';
 
 import { Formik } from 'formik';
 
@@ -13,8 +13,6 @@ import * as ImagePicker from 'expo-image-picker';
 import {
     StyledContainer,
     InnerContainer,
-    PageLogo,
-    SubTitle,
     StyledFormArea,
     LeftIcon,
     StyledInputLabel,
@@ -24,73 +22,53 @@ import {
     ButtonText,
     Colors, 
     MsgBox,
-    Line,
-    ExtraView,
-    ExtraText,
-    TextLink,
-    TextLinkContent,
     AvatarUpload
+  
 } from './../components/styles'
 
 const {brand, darkLight} = Colors;
 
-const Signup = ({navigation}) => {
+const UpdateProfile = ({navigation}) => {
 
         const [hidePassword, setHidePassword] = useState(true);
 
-     // The path of the picked image
-  const [pickedImagePath, setPickedImagePath] = useState('');
-
-  // This function is triggered when the "Select an image" button pressed
-  const showImagePicker = async () => {
-    // Ask the user for the permission to access the media library 
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("You've refused to allow this appp to access your photos!");
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync();
-
-    // Explore the result
-    console.log(result);
-
-    if (!result.cancelled) {
-      setPickedImagePath(result.uri);
-      console.log(result.uri);
-    }
-  }
-
-  // This function is triggered when the "Open camera" button pressed
-  const openCamera = async () => {
-    // Ask the user for the permission to access the camera
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("You've refused to allow this appp to access your camera!");
-      return;
-    }
-
-    const result = await ImagePicker.launchCameraAsync();
-
-    // Explore the result
-    console.log(result);
-
-    if (!result.cancelled) {
-      setPickedImagePath(result.uri);
-      console.log(result.uri);
-    }
-  }
+        // const ImagePickerExample = () => {
+        //     const [image, setImage] = useState(null);
+          
+        //     useEffect(() => {
+        //       (async () => {
+        //         if (Platform.OS !== 'web') {
+        //           const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        //           if (status !== 'granted') {
+        //             alert('Sorry, we need camera roll permissions to make this work!');
+        //           }
+        //         }
+        //       })();
+        //     }, []);
+          
+        //     const pickImage = async () => {
+        //       let result = await ImagePicker.launchImageLibraryAsync({
+        //         mediaTypes: ImagePicker.MediaTypeOptions.All,
+        //         allowsEditing: true,
+        //         aspect: [4, 3],
+        //         quality: 1,
+        //       });
+          
+        //       console.log(result);
+          
+        //       if (!result.cancelled) {
+        //         setImage(result.uri);
+        //       }
+        //     };
+          
+        //     return ImagePickerExample;
+        //   }
 
     return (
       <KeyboardAvoidingWrapper>
         <StyledContainer>
             <StatusBar style="dark" />
             <InnerContainer>
-                <PageLogo resizeMode="cover" source={require('./../assets/img/logo.png')} /> 
-                <SubTitle>Account Signup</SubTitle>
-
                 <Formik
                     initialValues={{ firstName: '', lastName: '', email: '', phone: '', password: '', confirmPassword: '' }}
                     onSubmit={(values) => {
@@ -100,14 +78,13 @@ const Signup = ({navigation}) => {
                 >
                     {({handleChange, handleBlur, handleSubmit, values}) => (
                     <StyledFormArea>
-                         { pickedImagePath !== '' &&   <AvatarUpload resizeMode="cover" source={{ uri: pickedImagePath }} /> }
+                         <AvatarUpload resizeMode="cover" source={require('./../assets/img/logo.png')} />
                        
-                        <StyledButton onPress={showImagePicker}>
-                          <ButtonText>Select an image</ButtonText> 
-                        </StyledButton>
-                        <StyledButton onPress={openCamera}>
-                          <ButtonText>Open Camera</ButtonText>
-                        </StyledButton>
+                        {/* <View >
+                            <StyledButton onPress={ImagePickerExample} >Pick</StyledButton>
+                            {image && <Image source={{ uri: image }} />}
+                         </View> */}
+
                         <MyTextInput 
                             label="First Name"
                             icon="person"
@@ -179,19 +156,11 @@ const Signup = ({navigation}) => {
 
                         <StyledButton onPress={handleSubmit}>
                             <ButtonText>
-                                Sign up
+                                UpdateProfile
                             </ButtonText>
                         </StyledButton>
 
-                        <Line />
-  
-                        <ExtraView>
-                            <ExtraText>Already an account? </ExtraText>
-                            <TextLink onPress={ () => navigation.navigate("Login") }>
-                                <TextLinkContent>SignIn</TextLinkContent>
-                            </TextLink>
-                        </ExtraView>
-  
+                        
                     </StyledFormArea>)}
                 </Formik>
             </InnerContainer>
@@ -216,4 +185,43 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
 }
 
 
-export default Signup;
+
+export default UpdateProfile;
+
+
+// export default function ImagePickerExample() {
+//     const [image, setImage] = useState(null);
+  
+//     // useEffect(() => {
+//     //   (async () => {
+//     //     if (Platform.OS !== 'web') {
+//     //       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+//     //       if (status !== 'granted') {
+//     //         alert('Sorry, we need camera roll permissions to make this work!');
+//     //       }
+//     //     }
+//     //   })();
+//     // }, []);
+  
+//     const pickImage = async () => {
+//       let result = await ImagePicker.launchImageLibraryAsync({
+//         mediaTypes: ImagePicker.MediaTypeOptions.All,
+//         allowsEditing: true,
+//         aspect: [4, 3],
+//         quality: 1,
+//       });
+  
+//       console.log(result);
+  
+//       if (!result.cancelled) {
+//         setImage(result.uri);
+//       }
+//     };
+  
+//     return (
+//       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//         <Button title="Pick an image from camera roll" onPress={pickImage} />
+//         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+//       </View>
+//     );
+//   }
