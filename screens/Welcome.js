@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {View, useWindowDimensions } from 'react-native';
 import Home from './../screens/Home'
@@ -10,9 +10,12 @@ import { Octicons, Ionicons, MaterialIcons, FontAwesome} from '@expo/vector-icon
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { CredentialsContext } from '../components/CredentialsContext';
 
 
-import {
+import {contextValue,
     StyledContainer,
     InnerContainer,
    
@@ -30,7 +33,15 @@ const {brand, darkLight} = Colors;
 
 const Welcome = ({navigation}) => {
 
-
+    const {storedCredentials, setStoredCredentials} =  useContext(CredentialsContext);
+    const clearLogin = () =>  {
+        AsyncStorage
+            .removeItem('digitalEyeCredentials')
+            .then(() => {
+                setStoredCredentials("");
+            })
+            .catch(error => console.log(error))
+    }
    
 
     return (
@@ -40,7 +51,7 @@ const Welcome = ({navigation}) => {
      
 
                 <Avatar resizeMode="cover" source={require('./../assets/img/logo.png')} />
-                <LogOutButton onPress={() => {navigation.navigate("Login")}}>
+                <LogOutButton onPress={clearLogin}>
                     <LogOutText>Logout</LogOutText>
                     <MaterialIcons name="logout" size={24} color="black" />
                 </LogOutButton>
