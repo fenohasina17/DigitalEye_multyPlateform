@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {View, ActivityIndicator} from 'react-native';
 
@@ -13,6 +13,10 @@ const {primary, tertiary} = Colors;
 
 
 import axios from 'axios';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { CredentialsContext } from '../components/CredentialsContext';
 
 
 import {
@@ -45,6 +49,7 @@ const Login = ({navigation}) => {
         const [hidePassword, setHidePassword] = useState(true);
         const [message, setMessage] = useState(true);
         const [messageType, setMessageType] = useState();
+        const {storedCredentials, setStoredCredentials} =  useContext(CredentialsContext);
 
         const handleLogin = (credentials, setSubmitting) => {
            
@@ -58,15 +63,29 @@ const Login = ({navigation}) => {
                         console.log("blabla");
                         handleMessage(message, error);
                     }else{
-                        navigation.navigate('Welcome', {...data[0]});
+                       // navigation.navigate('Welcome', {...data[0]});
+                        persistLogin({...data[0]}, message, status);
                     }
-                    // navigation.navigate('Welcome', {...data[0]});
+                   
                     setSubmitting(false);
                 } )
                 .catch( error => {
                 console.log(error);
                 setSubmitting(false);
                 handleMessage("An error occurred check your network and try again");
+            })
+        }
+
+        const persistLogin = (credentials, message, status) => {
+            AsyncStorage.setItem('digitalEyeCredentials', JSON.stringify(credentials))
+            .then(() =>{
+                handleMessage(message, status);
+                setStoredCredentials(credentials);
+            })
+            .catch((error) =>{
+                console.error();
+                handleMessage('Persisting login failed');
+
             })
         }
 

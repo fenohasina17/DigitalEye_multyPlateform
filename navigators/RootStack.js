@@ -8,6 +8,8 @@ import Welcome from './../screens/Welcome'
 import AddUser from './../screens/AddUser'
 import UpdateProfile from '../screens/UpdateProfile';
 
+import { CredentialsContext } from '../components/CredentialsContext';
+
 import {Colors} from './../components/styles'
 
 const {primary, tertiary} = Colors; 
@@ -18,7 +20,9 @@ const Stack = createNativeStackNavigator();
 
 const RootStack = () => {
     return(
-        <NavigationContainer>
+        <CredentialsContext.Consumer>
+            {(storedCredentials) =>(
+                <NavigationContainer>
             <Stack.Navigator
              screenOptions={{
                 headerShown: false,
@@ -33,13 +37,23 @@ const RootStack = () => {
               }}
                  initialRouteName="Login"
             >
+            {storedCredentials? (
+                <Stack.Screen name="Welcome" component={Welcome}/>
+                
+            ): (
+                <>
                 <Stack.Screen name="Login" component={Login}/>
                 <Stack.Screen name="Signup" component={Signup}/>
-                <Stack.Screen name="Welcome" component={Welcome}/>
-                <Stack.Screen name="AddUser" component={AddUser}/>
-                <Stack.Screen name="UpdateProfile" component={UpdateProfile}/>
+                </>
+            )}
+                
+               
+                
             </Stack.Navigator>
         </NavigationContainer>
+            )}
+        </CredentialsContext.Consumer>
+        
     );
 }
 
