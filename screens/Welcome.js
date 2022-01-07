@@ -35,12 +35,13 @@ const Welcome = ({navigation}) => {
 
     const {storedCredentials, setStoredCredentials} =  useContext(CredentialsContext);
     const clearLogin = () =>  {
-        AsyncStorage
-            .removeItem('digitalEyeCredentials')
-            .then(() => {
-                setStoredCredentials("");
-            })
-            .catch(error => console.log(error))
+        console.log("logout");
+    //    AsyncStorage
+    //        .removeItem('digitalEyeCredentials')
+    //        .then(() => {
+    //            setStoredCredentials("");
+    //        })
+    //        .catch(error => console.log(error))
     }
    
 
